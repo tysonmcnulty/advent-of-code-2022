@@ -1,0 +1,12 @@
+A tournament has many rounds
+A tournament evidently has a "player one score", which is just a score
+A tournament evidently has a "player two score", which is just a score
+A round has a "player one play", which is just a play
+A round has a "player two play", which is just a play
+A round evidently has a "player one score", which is just a score
+A round evidently has a "player two score", which is just a score
+A round may evidently have a winner, which is just a player
+A round may evidently be a draw
+A player is one of "player one" or "player two"
+A play is one of "rock", "paper", or "scissors"
+A score is just a number
