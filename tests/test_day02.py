@@ -1,6 +1,6 @@
 import unittest
 
-from src.day02 import load, Tournament, Round, Play, Player
+from src.day02 import Play, Player, Round, Tournament, load
 
 
 class Day02Tests(unittest.TestCase):

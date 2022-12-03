@@ -1,0 +1,8 @@
+A rucksack has two compartments
+A rucksack evidently has a "first compartment", which is just a compartment
+A rucksack evidently has a "second compartment", which is just a compartment
+A rucksack evidently has many items
+A compartment has may items
+An item has a type
+A type is one of: [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]
+An item evidently has a priority, which is just a number
