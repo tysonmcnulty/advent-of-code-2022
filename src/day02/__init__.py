@@ -1,28 +1,34 @@
 from enum import Enum
 
 
-def load(data_file: str):
-    rounds = []
-    with open(data_file) as tournament_data:
-        for line in tournament_data:
-            rounds.append(Round.from_str(line.strip()))
-
-    return Tournament(rounds=rounds)
-
-
 class Play(Enum):
     ROCK = "rock"
     PAPER = "paper"
     SCISSORS = "scissors"
 
 
-PLAY_DATA_MAP = {
-    "A": Play.ROCK,
-    "B": Play.PAPER,
-    "C": Play.SCISSORS,
-    "X": Play.ROCK,
-    "Y": Play.PAPER,
-    "Z": Play.SCISSORS,
+PLAY_MAP = {
+    "A X": (Play.ROCK, Play.ROCK),
+    "A Y": (Play.ROCK, Play.PAPER),
+    "A Z": (Play.ROCK, Play.SCISSORS),
+    "B X": (Play.PAPER, Play.ROCK),
+    "B Y": (Play.PAPER, Play.PAPER),
+    "B Z": (Play.PAPER, Play.SCISSORS),
+    "C X": (Play.SCISSORS, Play.ROCK),
+    "C Y": (Play.SCISSORS, Play.PAPER),
+    "C Z": (Play.SCISSORS, Play.SCISSORS),
+}
+
+OUTCOME_MAP = {
+    "A X": (Play.ROCK, Play.SCISSORS),
+    "A Y": (Play.ROCK, Play.ROCK),
+    "A Z": (Play.ROCK, Play.PAPER),
+    "B X": (Play.PAPER, Play.ROCK),
+    "B Y": (Play.PAPER, Play.PAPER),
+    "B Z": (Play.PAPER, Play.SCISSORS),
+    "C X": (Play.SCISSORS, Play.PAPER),
+    "C Y": (Play.SCISSORS, Play.SCISSORS),
+    "C Z": (Play.SCISSORS, Play.ROCK),
 }
 
 
@@ -62,13 +68,12 @@ class Round:
         )
 
     @staticmethod
-    def from_str(round_data: str):
-        play_data = round_data.split(" ")
-        print(play_data)
-        return Round(
-            PLAY_DATA_MAP[play_data[0]],
-            PLAY_DATA_MAP[play_data[1]],
-        )
+    def by_play_mapping(round_data: str):
+        return Round(*PLAY_MAP[round_data])
+
+    @staticmethod
+    def by_outcome_mapping(round_data: str):
+        return Round(*OUTCOME_MAP[round_data])
 
     @property
     def winner(self) -> Player | None:
@@ -120,3 +125,12 @@ class Tournament:
     @property
     def player_two_score(self) -> int:
         return sum([r.player_two_score for r in self.rounds])
+
+
+def load(data_file: str, round_parser=Round.by_play_mapping):
+    rounds = []
+    with open(data_file) as tournament_data:
+        for line in tournament_data:
+            rounds.append(round_parser(line.strip()))
+
+    return Tournament(rounds=rounds)
