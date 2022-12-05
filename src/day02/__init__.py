@@ -62,10 +62,13 @@ class Round:
         self.player_two_play = player_two_play
 
     def __eq__(self, other):
-        return (
-            self.player_one_play == other.player_one_play
-            and self.player_two_play == other.player_two_play
-        )
+        if isinstance(other, Round):
+            return (
+                self.player_one_play == other.player_one_play
+                and self.player_two_play == other.player_two_play
+            )
+        else:
+            return NotImplemented
 
     @staticmethod
     def by_play_mapping(round_data: str):
@@ -116,7 +119,10 @@ class Tournament:
         self.rounds = rounds
 
     def __eq__(self, other):
-        return self.rounds == other.rounds
+        if isinstance(other, Tournament):
+            return self.rounds == other.rounds
+        else:
+            return NotImplemented
 
     @property
     def player_one_score(self) -> int:

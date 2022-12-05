@@ -29,7 +29,10 @@ class Item:
         self.type = type
 
     def __eq__(self, other):
-        return self.type == other.type
+        if isinstance(other, Item):
+            return self.type == other.type
+        else:
+            return NotImplemented
 
     def __hash__(self):
         return hash((self.type,))
@@ -44,7 +47,10 @@ class Compartment:
         self.items = items
 
     def __eq__(self, other):
-        return self.items == other.items
+        if isinstance(other, Compartment):
+            return self.items == other.items
+        else:
+            return NotImplemented
 
     @staticmethod
     def from_str(type_data: str):
@@ -56,7 +62,10 @@ class Rucksack:
         self.compartments = compartments
 
     def __eq__(self, other):
-        return self.compartments == other.compartments
+        if isinstance(other, Rucksack):
+            return self.compartments == other.compartments
+        else:
+            return NotImplemented
 
     @property
     def first_compartment(self):

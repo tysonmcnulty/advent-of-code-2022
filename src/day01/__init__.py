@@ -20,7 +20,10 @@ class FoodItem:
         self.calorie_count = calorie_count
 
     def __eq__(self, other):
-        return self.calorie_count == other.calorie_count
+        if isinstance(other, FoodItem):
+            return self.calorie_count == other.calorie_count
+        else:
+            return NotImplemented
 
     def __str__(self):
         return f"{self.calorie_count}"
@@ -34,7 +37,10 @@ class Elf:
         self.food_items = food_items
 
     def __eq__(self, other):
-        return self.food_items == other.food_items
+        if isinstance(other, Elf):
+            return self.food_items == other.food_items
+        else:
+            return NotImplemented
 
     def __str__(self):
         return f"{self.food_items}"
