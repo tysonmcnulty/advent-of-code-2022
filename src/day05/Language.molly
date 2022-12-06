@@ -1,0 +1,9 @@
+A ship has many stacks
+A stack has many crates
+A crate has a label
+A label is one of: [ABCDEFGHIJKLMNOPQRSTUVWXYZ]
+A ship has a crane
+
+A step has a crate count
+A step has a "from" stack
+A step has a "to" stack
