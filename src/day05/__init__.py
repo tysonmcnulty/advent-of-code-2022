@@ -3,6 +3,8 @@ from itertools import zip_longest
 from re import match
 from typing import Self
 
+from src import load_data
+
 
 class Crate:
     def __init__(self, label):
@@ -83,11 +85,6 @@ class Ship:
                     end_crates.extend(reversed(crates))
                 case Strategy.CRATE_MOVER_9001:
                     end_crates.extend(crates)
-
-
-def load_data(data_file: str) -> list[str]:
-    with open(data_file) as data:
-        return [*data]
 
 
 def parse(data: list[str]) -> tuple[Ship, list[Step]]:
