@@ -1,4 +1,7 @@
-def load(data_file: str):
+from pathlib import Path
+
+
+def load(data_file: Path):
     elves = []
     with open(data_file) as calorie_data:
         calorie_counts = []

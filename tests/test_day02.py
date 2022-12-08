@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from src.day02 import Play, Player, Round, Tournament, load
 
@@ -6,13 +7,13 @@ from src.day02 import Play, Player, Round, Tournament, load
 class Day02Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.example = load("tests/resources/day02/example.txt")
+        cls.example = load(Path(__file__).parent / "resources/day02/example.txt")
         cls.example_by_outcome_mapping = load(
-            "tests/resources/day02/example.txt", Round.by_outcome_mapping
+            Path(__file__).parent / "resources/day02/example.txt", Round.by_outcome_mapping
         )
-        cls.input = load("src/day02/input.txt")
+        cls.input = load(Path(__file__).parent / "../src/day02/input.txt")
         cls.input_by_outcome_mapping = load(
-            "src/day02/input.txt", Round.by_outcome_mapping
+            Path(__file__).parent / "../src/day02/input.txt", Round.by_outcome_mapping
         )
 
     def test_round_from_str(self):

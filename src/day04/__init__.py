@@ -1,7 +1,8 @@
+from pathlib import Path
 from typing import Iterator, Self
 
 
-def load(data_file: str):
+def load(data_file: Path):
     assignment_pairs = []
     with open(data_file) as data:
         for line in data:

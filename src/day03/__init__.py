@@ -1,7 +1,8 @@
 from functools import cache
+from pathlib import Path
 
 
-def load(data_file: str):
+def load(data_file: Path):
     rucksacks = []
     with open(data_file) as rucksacks_data:
         for line in rucksacks_data:

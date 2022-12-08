@@ -1,4 +1,5 @@
 from enum import Enum
+from pathlib import Path
 
 
 class Play(Enum):
@@ -133,7 +134,7 @@ class Tournament:
         return sum([r.player_two_score for r in self.rounds])
 
 
-def load(data_file: str, round_parser=Round.by_play_mapping):
+def load(data_file: Path, round_parser=Round.by_play_mapping):
     rounds = []
     with open(data_file) as tournament_data:
         for line in tournament_data:

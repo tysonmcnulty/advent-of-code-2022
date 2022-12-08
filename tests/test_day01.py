@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from src.day01 import (
     Elf,
@@ -12,8 +13,8 @@ from src.day01 import (
 class Day01Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.example = load("tests/resources/day01/example.txt")
-        cls.input = load("src/day01/input.txt")
+        cls.example = load(Path(__file__).parent / "resources/day01/example.txt")
+        cls.input = load(Path(__file__).parent / "../src/day01/input.txt")
 
     def test_load_example(self):
         self.assertEqual(

@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from src.day03 import Compartment, Item, Rucksack, get_badges, get_unsorted_item, load
 
@@ -6,8 +7,8 @@ from src.day03 import Compartment, Item, Rucksack, get_badges, get_unsorted_item
 class Day03Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.example = load("tests/resources/day03/example.txt")
-        cls.input = load("src/day03/input.txt")
+        cls.example = load(Path(__file__).parent / "resources/day03/example.txt")
+        cls.input = load(Path(__file__).parent / "../src/day03/input.txt")
 
     def test_compartment_from_str(self):
         self.assertEqual(

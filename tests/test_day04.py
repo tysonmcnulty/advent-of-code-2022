@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from src.day04 import Assignment, load
 
@@ -6,8 +7,8 @@ from src.day04 import Assignment, load
 class Day04Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.example = load("tests/resources/day04/example.txt")
-        cls.input = load("src/day04/input.txt")
+        cls.example = load(Path(__file__).parent / "resources/day04/example.txt")
+        cls.input = load(Path(__file__).parent / "../src/day04/input.txt")
 
     def test_from_str(self):
         self.assertEqual(Assignment(1, 10), Assignment.from_str("1-10"))
