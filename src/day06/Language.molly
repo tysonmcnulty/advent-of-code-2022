@@ -1,0 +1,3 @@
+A datastream buffer has a data stream
+A datastream buffer evidently has a first start-of-packet marker
+A datastream buffer evidently has a first start-of-message marker

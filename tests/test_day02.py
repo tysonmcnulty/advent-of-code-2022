@@ -9,7 +9,8 @@ class Day02Tests(unittest.TestCase):
     def setUpClass(cls):
         cls.example = load(Path(__file__).parent / "resources/day02/example.txt")
         cls.example_by_outcome_mapping = load(
-            Path(__file__).parent / "resources/day02/example.txt", Round.by_outcome_mapping
+            Path(__file__).parent / "resources/day02/example.txt",
+            Round.by_outcome_mapping,
         )
         cls.input = load(Path(__file__).parent / "../src/day02/input.txt")
         cls.input_by_outcome_mapping = load(

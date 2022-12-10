@@ -7,7 +7,9 @@ from src.day05 import Crate, Ship, Stack, Step, Strategy, load_data, parse
 class Day05Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.example_data = load_data(Path(__file__).parent / "resources/day05/example.txt")
+        cls.example_data = load_data(
+            Path(__file__).parent / "resources/day05/example.txt"
+        )
         cls.input_data = load_data(Path(__file__).parent / "../src/day05/input.txt")
 
     def test_load_example(self):

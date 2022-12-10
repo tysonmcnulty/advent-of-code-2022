@@ -9,9 +9,12 @@ class Day06Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.examples = [
-            parse(d) for d in load_data(Path(__file__).parent / "resources/day06/example.txt")
+            parse(d)
+            for d in load_data(Path(__file__).parent / "resources/day06/example.txt")
         ]
-        cls.input = parse(load_data(Path(__file__).parent / "../src/day06/input.txt")[0])
+        cls.input = parse(
+            load_data(Path(__file__).parent / "../src/day06/input.txt")[0]
+        )
 
     def test_load_example(self):
         self.assertEqual(
