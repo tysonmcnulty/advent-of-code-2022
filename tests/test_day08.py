@@ -3,7 +3,7 @@ from itertools import chain
 from pathlib import Path
 
 from src import load_data
-from src.day08 import Forest, Tree, parse, Direction
+from src.day08 import Direction, Forest, Tree, parse
 
 
 class Day08Tests(unittest.TestCase):

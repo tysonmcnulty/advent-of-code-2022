@@ -1,9 +1,9 @@
-from dataclasses import dataclass, field, InitVar
+from dataclasses import InitVar, dataclass, field
 from enum import Enum
 from functools import cached_property
 from itertools import zip_longest
 from math import prod
-from typing import Optional, Iterator
+from typing import Iterator, Optional
 
 
 class Direction(Enum):

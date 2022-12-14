@@ -1,0 +1,6 @@
+A rope evidently has many segments
+A rope has a head, which is just a segment
+A rope evidently has a tail, which is just a segment
+A segment has a position
+A segment may be linked to another segment
+A move has a direction
