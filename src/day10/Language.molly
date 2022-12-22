@@ -1,0 +1,8 @@
+A program has many instructions
+An instruction has a keyword
+An instruction may have an argument
+"noop" is a kind of instruction
+"addx" is a kind of instruction
+A CPU has a register called "X"
+A CPU has a cycle number, which is just a number
+A register has a vaue
