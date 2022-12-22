@@ -1,12 +1,10 @@
 import re
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from enum import Enum
-from typing import Self, Iterator, Callable
+from typing import Iterator, Self, TypedDict
 
-
-def no() -> bool:
-    return False
+from src import Receiver
 
 
 class Keyword(Enum):
@@ -17,6 +15,12 @@ class Keyword(Enum):
 @dataclass
 class Register:
     value: int = 1
+
+
+@dataclass
+class Sprite:
+    center_position: int = 0
+    width: int = 1
 
 
 @dataclass
@@ -46,32 +50,84 @@ class Program:
     instructions: Iterator[Instruction]
 
 
+RegisterState = TypedDict("RegisterState", {"value": int})
+CPUState = TypedDict("CPUState", {"X": RegisterState, "cycle_number": int})
+
+
 @dataclass
 class CPU:
     X: Register = field(default_factory=Register)
     cycle_number: int = 0
+    receivers: dict[str, Receiver[CPUState]] = field(default_factory=dict)
 
-    def run(self, program: Program, cycle_interval=None):
-        n = 0
+    def run(self, program: Program):
         for instruction in program.instructions:
             for _ in range(0, self.get_execution_cycles(instruction)):
-                self.cycle_number += 1
-                n += 1
-
-                if n == cycle_interval:
-                    yield
-                    n = 0
+                self.tick()
 
             instruction.execute(self.X)
 
-        yield
+    def tick(self):
+        self.cycle_number += 1
+        state = asdict(self)
+        for it in self.receivers.items():
+            it[1].receive(state)
 
     @staticmethod
-    def get_execution_cycles(instruction) -> int:
+    def get_execution_cycles(instruction: Instruction) -> int:
         if instruction.keyword == Keyword.NOOP:
             return 1
         elif instruction.keyword == Keyword.ADDX:
             return 2
+
+
+class Pixel(Enum):
+    DARK = "."
+    LIT = "#"
+
+
+@dataclass
+class CRT:
+    width: int = 40
+    height: int = 6
+    pixels: list[list[Pixel]] = field(init=False)
+    sprite: Sprite = field(default_factory=Sprite)
+
+    def __post_init__(self):
+        self.pixels = [
+            [Pixel.DARK for _ in range(self.width)] for _ in range(self.height)
+        ]
+
+    def receive(self, cpu_state: CPUState):
+        self.sprite.center_position = cpu_state["X"]["value"]
+        current_row_index, current_pixel_index = divmod(
+            (cpu_state["cycle_number"] - 1), self.width
+        )
+        current_pixel_value = (
+            Pixel.LIT
+            if abs(self.sprite.center_position - current_pixel_index)
+            <= self.sprite.width
+            else Pixel.DARK
+        )
+        self.pixels[current_row_index][current_pixel_index] = current_pixel_value
+
+    def render(self) -> list[str]:
+        return ["".join(p.value for p in row) for row in self.pixels]
+
+
+@dataclass
+class Device:
+    cpu: CPU = field(default_factory=CPU)
+    crt: CRT = field(default_factory=CRT)
+
+    def __post_init__(self):
+        self.install("crt", self.crt)
+
+    def install(self, name: str, receiver: Receiver[CPUState]):
+        self.cpu.receivers[name] = receiver
+
+    def run(self, program: Program):
+        self.cpu.run(program)
 
 
 @dataclass
