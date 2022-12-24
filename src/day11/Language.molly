@@ -1,0 +1,16 @@
+A monkey has many items
+A monkey has a (monkey) number
+An item has a worry level
+A monkey has a (item) operation
+"Add" is a kind of operation
+"Multiply" is a kind of operation
+"Square" is a kind of operation
+A monkey has an (item) test
+"Divisible by" is a kind of test
+A monkey has an "if true", which is just a monkey number
+A monkey has an "if false", which is just a monkey number
+A monkey may be associated with a game of keep away
+
+Keep away has many players, which are just monkeys
+Keep away evidently has a next round number, which is just a number
+Keep away has a round history
