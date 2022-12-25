@@ -77,7 +77,11 @@ class Day11Tests(unittest.TestCase):
     def test_example_long_game(self):
         monkeys = [*parse(self.example_data)]
         base = int(math.prod(m.test.factor for m in monkeys))
-        game = KeepAway(players={m.number: m for m in monkeys}, operation=Item.Mod(base), round_results=deque(maxlen=1))
+        game = KeepAway(
+            players={m.number: m for m in monkeys},
+            operation=Item.Mod(base),
+            round_results=deque(maxlen=1),
+        )
 
         game.play(num_rounds=1)
         self.assertEqual([2, 4, 3, 6], [m.inspection_count for m in monkeys])
@@ -89,20 +93,33 @@ class Day11Tests(unittest.TestCase):
         self.assertEqual([5204, 4792, 199, 5192], [m.inspection_count for m in monkeys])
 
         game.play(num_rounds=1000)
-        self.assertEqual([10419, 9577, 392, 10391], [m.inspection_count for m in monkeys])
+        self.assertEqual(
+            [10419, 9577, 392, 10391], [m.inspection_count for m in monkeys]
+        )
 
         game.play(num_rounds=1000)
-        self.assertEqual([15638, 14358, 587, 15593], [m.inspection_count for m in monkeys])
+        self.assertEqual(
+            [15638, 14358, 587, 15593], [m.inspection_count for m in monkeys]
+        )
 
         game.play(num_rounds=7000)
-        self.assertEqual([52166, 47830, 1938, 52013], [m.inspection_count for m in monkeys])
+        self.assertEqual(
+            [52166, 47830, 1938, 52013], [m.inspection_count for m in monkeys]
+        )
         self.assertEqual(2713310158, game.round_results[-1].monkey_business_level)
 
     def test_solution_2(self):
         monkeys = [*parse(self.input_data)]
         base = int(math.prod(m.test.factor for m in monkeys))
-        game = KeepAway(players={m.number: m for m in monkeys}, operation=Item.Mod(base), round_results=deque(maxlen=1))
+        game = KeepAway(
+            players={m.number: m for m in monkeys},
+            operation=Item.Mod(base),
+            round_results=deque(maxlen=1),
+        )
 
         game.play(num_rounds=10000)
-        self.assertEqual([10659, 70776, 73630, 109098, 106461, 62841, 61442, 50365], [m.inspection_count for m in monkeys])
+        self.assertEqual(
+            [10659, 70776, 73630, 109098, 106461, 62841, 61442, 50365],
+            [m.inspection_count for m in monkeys],
+        )
         self.assertEqual(11614682178, game.round_results[-1].monkey_business_level)

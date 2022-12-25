@@ -1,0 +1,7 @@
+A heightmap has many, many squares
+A square has an elevation
+A square evidently has a location
+A square is associated with a heightmap
+A square evidently has many neighbors, which are just squares
+A hiker has a "start" square
+A hiker has a "destination" square 
