@@ -1,7 +1,6 @@
 import json
 from dataclasses import dataclass
 from functools import total_ordering
-from operator import index
 from typing import Iterator, Union
 
 PacketData = list[Union[int, "PacketData"]]

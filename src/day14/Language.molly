@@ -1,0 +1,13 @@
+A cave has many structures
+A cave evidently has an extent, which is just two locations
+A structure has a path
+A path has many segments
+A structure evidently has mny rocks
+A path evidently has many rocks
+A segment evidently has many rocks
+A rock has a location
+A location is just two numbers
+
+A cave has a (sand) source
+A cave has many (sand) units
+A unit (of sand) has a location
