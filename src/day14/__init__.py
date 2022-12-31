@@ -211,8 +211,7 @@ class Cave:
 
     @property
     def extent(self) -> Extent:
-        extent = Cave._extent(self.structures, (self.sand_source.location,))
-        return extent
+        return Cave._extent(self.structures, self.sand_source)
 
     def render(self, canvas):
         self.sand_source.render(canvas)
@@ -251,22 +250,24 @@ class Cave:
             )
             if len(adjacent_empty_locations) == 0:
                 self.sand_units[current_unit.location] = current_unit
+                empty_locations.pop()
                 yield state
+
                 if len(empty_locations) == 0:
                     break
 
-                empty_locations.pop()
                 current_unit = self.sand_source.generate()
 
             current_unit.location = empty_locations[-1]
 
     @staticmethod
     @cache
-    def _extent(
-        structures: frozenset[Structure], locations: tuple[Location, ...]
-    ) -> Extent:
+    def _extent(structures: frozenset[Structure], sand_source: Sand.Source) -> Extent:
         return total_extent(
-            chain((s.extent for s in structures), ((it, it) for it in locations))
+            chain(
+                (s.extent for s in structures),
+                ((sand_source.location, sand_source.location),),
+            )
         )
 
 
@@ -286,8 +287,29 @@ class Canvas:
             location[0] - self.extent[0][0]
         ] = symbol
 
-    def print(self) -> list[str]:
-        return ["".join(symbol for symbol in row) for row in self.content]
+    def print(self, frame: Optional[Extent] = None) -> list[str]:
+        _frame: Extent = frame or self.extent
+        v_slice = slice(
+            _frame[0][1] - self.extent[0][1],
+            len(self.content) + _frame[1][1] - self.extent[1][1],
+        )
+        h_slice = slice(
+            _frame[0][0] - self.extent[0][0],
+            len(self.content[0]) + _frame[1][0] - self.extent[1][0],
+        )
+        return [
+            "".join(symbol for symbol in row[h_slice]) for row in self.content[v_slice]
+        ]
+
+
+def with_floor(
+    structures: frozenset[Structure], horizontal_midpoint=500
+) -> frozenset[Structure]:
+    structure_extent = total_extent(s.extent for s in structures)
+    h = horizontal_midpoint
+    d = structure_extent[1][1] + 2
+    floor = Segment.from_locations(((h - (d + 1), d), (h + (d + 1), d)))
+    return structures | {Structure((floor,))}
 
 
 def possible_next_locations(unit: Sand.Unit) -> tuple[Location, Location, Location]:
@@ -298,6 +320,6 @@ def possible_next_locations(unit: Sand.Unit) -> tuple[Location, Location, Locati
     )
 
 
-def parse(data: list[str]) -> Cave:
+def parse(data: list[str]) -> frozenset[Structure]:
     structures = (Structure.from_str(line.strip()) for line in data)
-    return Cave(structures=frozenset(structures))
+    return frozenset(structures)

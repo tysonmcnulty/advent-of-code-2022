@@ -1,7 +1,7 @@
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator, Optional, Protocol, TypeVar
+from typing import Any, Iterator, Optional, Protocol, TypeVar
 
 
 def load_data(data_file: Path) -> list[str]:
@@ -17,11 +17,11 @@ class Receiver(Protocol[T]):
         ...
 
 
-def yes(_: T = None) -> bool:
+def yes(*_args: Any) -> bool:
     return True
 
 
-def no(_: T = None) -> bool:
+def no(*_args: Any) -> bool:
     return False
 
 
