@@ -1,0 +1,8 @@
+A beacon has a location
+A scanner has a location
+A scanner has a range
+A range has a radius
+A range is a kind of container of points
+An interval has a "start" location
+An interval has an "end" location
+A location is just two numbers
